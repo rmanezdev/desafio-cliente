@@ -4,16 +4,21 @@ import com.desafio.cliente.dto.ClienteDTO;
 
 public class ClienteChainEndereco implements ClienteChain {
 
-    private ClienteChain chain;
+    private ClienteChain nextChain;
 
     @Override
     public void setNextChain(ClienteChain nextChain) {
-        this.chain=nextChain;
+        this.nextChain=nextChain;
     }
+
     @Override
     public boolean valid(ClienteDTO dto){
         if(dto.getEndereco()!=null ){
-            return true;
+            if (this.nextChain != null) {
+                return this.nextChain.valid(dto);
+            }else{
+                return true;
+            }
         }
         return false;
     }

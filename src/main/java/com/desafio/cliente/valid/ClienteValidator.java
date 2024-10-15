@@ -24,9 +24,7 @@ public class ClienteValidator {
         c2.setNextChain(c3);
     }
 
-    public void valid(ClienteDTO dto){
-        if ( this.c1.valid(dto) ){
-
-        }
+    public boolean valid(ClienteDTO dto){
+        return this.c1.valid(dto);
     }
 }

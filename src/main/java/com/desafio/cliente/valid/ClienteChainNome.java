@@ -15,7 +15,7 @@ public class ClienteChainNome implements ClienteChain {
     public boolean valid(ClienteDTO dto){
         if(dto.getNome()!=null && dto.getNome().length()>=10 && dto.getNome().length()<=25 ) {
             if (this.nextChain != null) {
-                this.nextChain.valid(dto);
+                return this.nextChain.valid(dto);
             }
         }
         return false;
