@@ -2,12 +2,12 @@ package com.desafio.cliente.valid;
 
 import com.desafio.cliente.dto.ClienteDTO;
 
-public class ClienteChainEndereco implements ClientChain {
+public class ClienteChainEndereco implements ClienteChain {
 
-    private ClientChain chain;
+    private ClienteChain chain;
 
     @Override
-    public void setNextChain(ClientChain nextChain) {
+    public void setNextChain(ClienteChain nextChain) {
         this.chain=nextChain;
     }
     @Override

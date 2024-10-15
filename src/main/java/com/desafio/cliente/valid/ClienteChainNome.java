@@ -2,18 +2,21 @@ package com.desafio.cliente.valid;
 
 import com.desafio.cliente.dto.ClienteDTO;
 
-public class ClienteChainNome implements ClientChain {
+public class ClienteChainNome implements ClienteChain {
 
-    private ClientChain chain;
+    private ClienteChain nextChain;
 
     @Override
-    public void setNextChain(ClientChain nextChain) {
-        this.chain=nextChain;
+    public void setNextChain(ClienteChain nextChain){
+        this.nextChain=nextChain;
     }
+
     @Override
     public boolean valid(ClienteDTO dto){
-        if(dto.getNome()!=null && dto.getNome().length()>=10 && dto.getNome().length()<=25 ){
-            return true;
+        if(dto.getNome()!=null && dto.getNome().length()>=10 && dto.getNome().length()<=25 ) {
+            if (this.nextChain != null) {
+                this.nextChain.valid(dto);
+            }
         }
         return false;
     }

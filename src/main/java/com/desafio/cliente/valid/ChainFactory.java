@@ -9,7 +9,7 @@ public class ChainFactory {
     public static final int CHAIN_DOCUMENTO = 1;
     public static final int CHAIN_ENDERECO = 2;
 
-    public ClientChain createChain(final Integer type){
+    public ClienteChain createChain(final Integer type){
         return switch (type){
             case CHAIN_NOME:
                 yield new ClienteChainNome();

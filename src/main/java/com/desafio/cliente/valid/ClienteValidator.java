@@ -1,12 +1,13 @@
 package com.desafio.cliente.valid;
 
+import com.desafio.cliente.dto.ClienteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ClienteValidator {
 
-    private ClientChain c1;
+    private ClienteChain c1;
 
     private ChainFactory factory;
 
@@ -15,13 +16,17 @@ public class ClienteValidator {
         this.factory = factory;
     }
 
-
-    public ClienteValidator(){
+    private void createChain(){
         this.c1 = this.factory.createChain(ChainFactory.CHAIN_NOME);
-        ClientChain c2 = this.factory.createChain(ChainFactory.CHAIN_DOCUMENTO);
-        ClientChain c3 = this.factory.createChain(ChainFactory.CHAIN_ENDERECO);
-        c1.setNextChain(c2);
+        ClienteChain c2 = this.factory.createChain(ChainFactory.CHAIN_DOCUMENTO);
+        ClienteChain c3 = this.factory.createChain(ChainFactory.CHAIN_ENDERECO);
+        this.c1.setNextChain(c2);
         c2.setNextChain(c3);
+    }
 
+    public void valid(ClienteDTO dto){
+        if ( this.c1.valid(dto) ){
+
+        }
     }
 }
