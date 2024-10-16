@@ -31,7 +31,6 @@ public class ClienteService {
         this.clienteValidator = clienteValidator;
     }
 
-    @Transactional
     public ClienteDTO create( ClienteDTO dto ){
         if ( clienteValidator.valid(dto) ){
             ClienteEntity e = modelMapper.map(dto, ClienteEntity.class);

@@ -2,10 +2,7 @@ package com.desafio.cliente.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 @Entity(name="cliente")
@@ -13,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class ClienteEntity {
 
     @Id
@@ -29,7 +27,7 @@ public class ClienteEntity {
     private String documento;
 
     @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
+            fetch = FetchType.EAGER, optional = false)
     private EnderecoEntity endereco;
 
 }

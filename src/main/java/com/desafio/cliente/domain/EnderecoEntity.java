@@ -5,15 +5,17 @@ package com.desafio.cliente.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity(name="endereco")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode
 public class EnderecoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column
@@ -24,9 +26,10 @@ public class EnderecoEntity {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id", referencedColumnName = "id")
+
     private ClienteEntity cliente;
 
-    /*
+
     public EnderecoEntity(EnderecoBuilder builder){
         this.cep = builder.cep;
         this.id = builder.id;
@@ -57,5 +60,5 @@ public class EnderecoEntity {
             return new EnderecoEntity(this);
         }
     }
-    */
+
 }
