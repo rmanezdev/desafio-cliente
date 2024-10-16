@@ -23,16 +23,22 @@ public class ClienteService {
     private ClienteRepository repository;
     private ModelMapper modelMapper;
     private ClienteValidator clienteValidator;
+    private EnderecoService enderecoService;
 
     @Autowired
-    public ClienteService( ClienteRepository repository, ModelMapper modelMapper, ClienteValidator clienteValidator){
+    public ClienteService( ClienteRepository repository, ModelMapper modelMapper, ClienteValidator clienteValidator, EnderecoService enderecoService){
         this.repository = repository;
         this.modelMapper = modelMapper;
         this.clienteValidator = clienteValidator;
+        this.enderecoService = enderecoService;
     }
 
     public ClienteDTO create( ClienteDTO dto ){
         if ( clienteValidator.valid(dto) ){
+            if (dto.getEndereco().getLogradouro()==null || dto.getEndereco().getLogradouro().isEmpty()){
+                EnderecoDTO edto = enderecoService.findByCEP(String.valueOf(dto.getEndereco().getCep()));
+                dto.getEndereco().setLogradouro(edto.getLogradouro());
+            }
             ClienteEntity e = modelMapper.map(dto, ClienteEntity.class);
             e = repository.save(e);
             dto = modelMapper.map(e, ClienteDTO.class);

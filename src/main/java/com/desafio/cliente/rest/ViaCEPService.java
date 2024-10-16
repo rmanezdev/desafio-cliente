@@ -9,10 +9,10 @@ public class ViaCEPService {
     @Autowired
     private ViaCEPClient viaCEPClient;
 
-    public Object getCep(String cep){
+    public ViaCEPDTO getCep(String cep){
         //fuckin the FeignClient without none safe
-        ResponseEntity<Object> o  = viaCEPClient.getAddressByCEP(cep);
-        return o;
+        ResponseEntity<ViaCEPDTO> viaCEPDTO  = viaCEPClient.getAddressByCEP(cep);
+        return viaCEPDTO.getBody();
     }
 
 }

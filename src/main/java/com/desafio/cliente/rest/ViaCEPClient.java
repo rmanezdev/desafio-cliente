@@ -15,6 +15,6 @@ todas os endereços devem ficar em uma variável externa
 public interface ViaCEPClient {
 
     @GetMapping("/{cep}/json")
-    public ResponseEntity<Object> getAddressByCEP(@PathVariable("cep") String cep);
+    public ResponseEntity<ViaCEPDTO> getAddressByCEP(@PathVariable("cep") String cep);
 
 }

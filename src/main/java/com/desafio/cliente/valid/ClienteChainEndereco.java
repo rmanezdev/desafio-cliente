@@ -13,7 +13,7 @@ public class ClienteChainEndereco implements ClienteChain {
 
     @Override
     public boolean valid(ClienteDTO dto){
-        if(dto.getEndereco()!=null ){
+        if(dto.getEndereco()!=null && dto.getEndereco().getCep()!=null){
             if (this.nextChain != null) {
                 return this.nextChain.valid(dto);
             }else{

@@ -17,6 +17,7 @@ public class A {
     @GetMapping(value = "/{cep}")
     public Object aaa(@PathVariable("cep") String cep){
         Object o = viaCEPService.getCep(cep);
+        System.out.println(o.toString());
         return o;
 
     }
