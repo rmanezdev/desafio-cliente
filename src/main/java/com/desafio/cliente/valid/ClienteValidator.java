@@ -21,10 +21,11 @@ public class ClienteValidator {
         ClienteChain c2 = this.factory.createChain(ChainFactory.CHAIN_DOCUMENTO);
         ClienteChain c3 = this.factory.createChain(ChainFactory.CHAIN_ENDERECO);
         this.c1.setNextChain(c2);
-        c2.setNextChain(c3);
+        //c2.setNextChain(c3);
     }
 
     public boolean valid(ClienteDTO dto){
+        createChain();
         return this.c1.valid(dto);
     }
 }

@@ -28,11 +28,8 @@ public class ClienteEntity {
     //@Column(unique=true)
     private String documento;
 
-    @OneToOne(
-            mappedBy = "cliente",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
     private EnderecoEntity endereco;
 
 }

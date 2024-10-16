@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class EnderecoEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -21,9 +22,11 @@ public class EnderecoEntity {
     @Column
     private String logradouro;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private ClienteEntity cliente;
 
+    /*
     public EnderecoEntity(EnderecoBuilder builder){
         this.cep = builder.cep;
         this.id = builder.id;
@@ -53,6 +56,6 @@ public class EnderecoEntity {
         public EnderecoEntity builder(){
             return new EnderecoEntity(this);
         }
-
     }
+    */
 }

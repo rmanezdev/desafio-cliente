@@ -13,7 +13,7 @@ public class ClienteChainNome implements ClienteChain {
 
     @Override
     public boolean valid(ClienteDTO dto){
-        if(dto.getNome()!=null && dto.getNome().length()>=10 && dto.getNome().length()<=25 ) {
+        if(dto.getNome()!=null && dto.getNome().length()>=5 && dto.getNome().length()<=25 ) {
             if (this.nextChain != null) {
                 return this.nextChain.valid(dto);
             }

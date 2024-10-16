@@ -10,6 +10,7 @@ import com.desafio.cliente.web.exception.AppException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,7 @@ public class ClienteService {
         this.clienteValidator = clienteValidator;
     }
 
-
+    @Transactional
     public ClienteDTO create( ClienteDTO dto ){
         if ( clienteValidator.valid(dto) ){
             ClienteEntity e = modelMapper.map(dto, ClienteEntity.class);
@@ -43,7 +44,7 @@ public class ClienteService {
     }
 
 
-    public ClienteDTO get( Long id ){
+    public ClienteDTO read( Long id ){
         ClienteDTO dto = modelMapper.map(repository.findById(id), ClienteDTO.class);
         return dto;
     }

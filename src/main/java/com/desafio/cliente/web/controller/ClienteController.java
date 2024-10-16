@@ -1,5 +1,7 @@
 package com.desafio.cliente.web.controller;
 
+import com.desafio.cliente.dto.ClienteDTO;
+import com.desafio.cliente.dto.EnderecoDTO;
 import com.desafio.cliente.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,18 +20,18 @@ public class ClienteController {
 
 
     @PostMapping()
-    public ResponseEntity<String> create(@RequestBody String created){
-        return new ResponseEntity<>("create ok", HttpStatus.CREATED);
+    public ResponseEntity<ClienteDTO> create(@RequestBody ClienteDTO created){
+        return new ResponseEntity<ClienteDTO>(service.create(created), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<String> read(@PathVariable("id") long id){
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+    public ResponseEntity<ClienteDTO> read(@PathVariable("id") long id){
+        return new ResponseEntity<>(service.read(id), HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<String> update(@PathVariable("id") long id, @RequestBody String updated){
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+    public ResponseEntity<ClienteDTO> update(@PathVariable("id") long id, @RequestBody ClienteDTO updated){
+        return new ResponseEntity<ClienteDTO>(service.update(id, updated), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -38,22 +40,10 @@ public class ClienteController {
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<String> patch(@PathVariable("id") long id){
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+    public ResponseEntity<ClienteDTO> patch(@PathVariable("id") long id, @RequestBody EnderecoDTO enderecoDTO){
+        ClienteDTO clienteDTO = service.changeAddress(id, enderecoDTO);
+        return new ResponseEntity<ClienteDTO>(clienteDTO, HttpStatus.OK);
     }
-    /*
-     public TodoDto completeTodo(Long id) {
-
-        Todo todo = todoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Todo not found with id : " + id));
-
-        todo.setCompleted(Boolean.TRUE);
-
-        Todo updatedTodo = todoRepository.save(todo);
-
-        return mapToTodoDto(updatedTodo);
-    }
-    */
 
     @GetMapping(value = "/findAll")
     public ResponseEntity<List<String>> findAll(){

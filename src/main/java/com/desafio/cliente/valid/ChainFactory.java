@@ -9,14 +9,14 @@ public class ChainFactory {
     public static final int CHAIN_DOCUMENTO = 1;
     public static final int CHAIN_ENDERECO = 2;
 
-    public ClienteChain createChain(final Integer type){
+    public ClienteChain createChain(final int type){
         return switch (type){
             case CHAIN_NOME:
                 yield new ClienteChainNome();
             case CHAIN_DOCUMENTO:
-                yield new ClienteChainNome();
+                yield new ClienteChainDocumento();
             case CHAIN_ENDERECO:
-                yield new ClienteChainNome();
+                yield new ClienteChainEndereco();
             default:
                 throw new IllegalStateException("Unexpected value: " + type);
         };
