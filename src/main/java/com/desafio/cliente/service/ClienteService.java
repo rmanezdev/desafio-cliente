@@ -1,5 +1,6 @@
 package com.desafio.cliente.service;
 
+import com.desafio.cliente.cnt.ErrorCodes;
 import com.desafio.cliente.domain.ClienteEntity;
 import com.desafio.cliente.domain.EnderecoEntity;
 import com.desafio.cliente.dto.ClienteDTO;
@@ -23,23 +24,28 @@ public class ClienteService {
     private ClienteRepository repository;
     private ModelMapper modelMapper;
     private ClienteValidator clienteValidator;
+    private EnderecoService enderecoService;
 
     @Autowired
-    public ClienteService( ClienteRepository repository, ModelMapper modelMapper, ClienteValidator clienteValidator){
+    public ClienteService( ClienteRepository repository, ModelMapper modelMapper, ClienteValidator clienteValidator, EnderecoService enderecoService){
         this.repository = repository;
         this.modelMapper = modelMapper;
         this.clienteValidator = clienteValidator;
+        this.enderecoService = enderecoService;
     }
 
-    @Transactional
     public ClienteDTO create( ClienteDTO dto ){
         if ( clienteValidator.valid(dto) ){
+            if (dto.getEndereco().getLogradouro()==null || dto.getEndereco().getLogradouro().isEmpty()){
+                EnderecoDTO edto = enderecoService.findByCEP(String.valueOf(dto.getEndereco().getCep()));
+                dto.getEndereco().setLogradouro(edto.getLogradouro());
+            }
             ClienteEntity e = modelMapper.map(dto, ClienteEntity.class);
             e = repository.save(e);
             dto = modelMapper.map(e, ClienteDTO.class);
             return dto;
         }else{
-            throw new AppException("Erro create");
+            throw new AppException(ErrorCodes.ERROR_CODES_CREATE_CLIENTE.getErrMsg());
         }
     }
 
@@ -61,7 +67,7 @@ public class ClienteService {
             }).orElseGet(null);
             return r;
         }else{
-            throw new AppException("Erro create");
+            throw new AppException(ErrorCodes.ERROR_CODES_UPDATE_CLIENTE.getErrMsg());
         }
 
     }
@@ -72,6 +78,14 @@ public class ClienteService {
         return Optional.of(listDTO);
     }
 
+    public void delete(Long id ){
+        Optional<ClienteEntity> o = repository.findById(id);
+        if(o.isPresent()){
+            repository.delete(o.get());
+        }else{
+            throw new AppException(ErrorCodes.ERROR_CODES_UPDATE_CLIENTE.getErrMsg());
+        }
+    }
 
     public ClienteDTO changeAddress(Long id, EnderecoDTO enderecoDTO){
         if( enderecoDTO !=null ){
@@ -90,4 +104,5 @@ public class ClienteService {
             throw new AppException("erro endereço nulo");
         }
     }
+
 }

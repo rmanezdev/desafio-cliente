@@ -5,28 +5,28 @@ package com.desafio.cliente.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity(name="endereco")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode
 public class EnderecoEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column
-    private Long cep;
+    private String cep;
 
     @Column
     private String logradouro;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "endereco")
     private ClienteEntity cliente;
 
-    /*
     public EnderecoEntity(EnderecoBuilder builder){
         this.cep = builder.cep;
         this.id = builder.id;
@@ -35,7 +35,7 @@ public class EnderecoEntity {
 
     public static class EnderecoBuilder{
         private Long id;
-        private Long cep;
+        private String cep;
         private String logradouro;
 
         public EnderecoBuilder setId(Long id){
@@ -43,7 +43,7 @@ public class EnderecoEntity {
             return this;
         }
 
-        public EnderecoBuilder setCep(Long cep){
+        public EnderecoBuilder setCep(String cep){
             this.cep = cep;
             return this;
         }
@@ -57,5 +57,5 @@ public class EnderecoEntity {
             return new EnderecoEntity(this);
         }
     }
-    */
+
 }
