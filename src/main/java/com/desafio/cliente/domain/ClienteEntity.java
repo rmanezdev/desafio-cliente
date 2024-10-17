@@ -26,8 +26,8 @@ public class ClienteEntity {
     //@Column(unique=true)
     private String documento;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER, optional = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
     private EnderecoEntity endereco;
 
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EnderecoDTO {
     private Long id;
-    private Long cep;
+    private String cep;
     private String logradouro;
 
     public EnderecoDTO(EnderecoBuilder builder){
@@ -22,7 +22,7 @@ public class EnderecoDTO {
     }
     public static class EnderecoBuilder{
         private Long id;
-        private Long cep;
+        private String cep;
         private String logradouro;
 
         public EnderecoBuilder setId(Long id){
@@ -30,7 +30,7 @@ public class EnderecoDTO {
             return this;
         }
 
-        public EnderecoBuilder setCep(Long cep){
+        public EnderecoBuilder setCep(String cep){
             this.cep = cep;
             return this;
         }

@@ -1,5 +1,6 @@
 package com.desafio.cliente.service;
 
+import com.desafio.cliente.cnt.ErrorCodes;
 import com.desafio.cliente.domain.ClienteEntity;
 import com.desafio.cliente.domain.EnderecoEntity;
 import com.desafio.cliente.dto.ClienteDTO;
@@ -44,7 +45,7 @@ public class ClienteService {
             dto = modelMapper.map(e, ClienteDTO.class);
             return dto;
         }else{
-            throw new AppException("Erro create");
+            throw new AppException(ErrorCodes.ERROR_CODES_CREATE_CLIENTE.getErrMsg());
         }
     }
 
@@ -66,7 +67,7 @@ public class ClienteService {
             }).orElseGet(null);
             return r;
         }else{
-            throw new AppException("Erro create");
+            throw new AppException(ErrorCodes.ERROR_CODES_UPDATE_CLIENTE.getErrMsg());
         }
 
     }
@@ -77,6 +78,14 @@ public class ClienteService {
         return Optional.of(listDTO);
     }
 
+    public void delete(Long id ){
+        Optional<ClienteEntity> o = repository.findById(id);
+        if(o.isPresent()){
+            repository.delete(o.get());
+        }else{
+            throw new AppException(ErrorCodes.ERROR_CODES_UPDATE_CLIENTE.getErrMsg());
+        }
+    }
 
     public ClienteDTO changeAddress(Long id, EnderecoDTO enderecoDTO){
         if( enderecoDTO !=null ){
@@ -95,4 +104,5 @@ public class ClienteService {
             throw new AppException("erro endereço nulo");
         }
     }
+
 }

@@ -19,16 +19,13 @@ public class EnderecoEntity {
     private Long id;
 
     @Column
-    private Long cep;
+    private String cep;
 
     @Column
     private String logradouro;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
-
+    @OneToOne(mappedBy = "endereco")
     private ClienteEntity cliente;
-
 
     public EnderecoEntity(EnderecoBuilder builder){
         this.cep = builder.cep;
@@ -38,7 +35,7 @@ public class EnderecoEntity {
 
     public static class EnderecoBuilder{
         private Long id;
-        private Long cep;
+        private String cep;
         private String logradouro;
 
         public EnderecoBuilder setId(Long id){
@@ -46,7 +43,7 @@ public class EnderecoEntity {
             return this;
         }
 
-        public EnderecoBuilder setCep(Long cep){
+        public EnderecoBuilder setCep(String cep){
             this.cep = cep;
             return this;
         }

@@ -36,7 +36,8 @@ public class ClienteController {
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") long id){
-        return new ResponseEntity<>("ok", HttpStatus.OK);
+        service.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping(value = "/{id}")
@@ -46,7 +47,10 @@ public class ClienteController {
     }
 
     @GetMapping(value = "/findAll")
-    public ResponseEntity<List<String>> findAll(){
-        return new ResponseEntity<>(List.of("ok"), HttpStatus.OK);
+    public ResponseEntity<List<ClienteDTO>> findAll(){
+        return service.findAll()
+                .map(record -> ResponseEntity.ok().body(record))
+                .orElse(ResponseEntity.notFound().build());
+
     }
 }
